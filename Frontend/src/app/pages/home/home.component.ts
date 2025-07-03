@@ -1,22 +1,29 @@
 import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, GoogleMapsModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
   private slideInterval: any;
+  private partnersInterval: any;
   currentSlide = 0;
   currentTestimonial = 0;
+  currentPartnerSlide = 0;
   isBrowser: boolean;
   imagesLoaded = false;
   loadedImagesCount = 0;
   foundationSectionVisible = false;
+  galleryImagesLoaded = false;
+  loadedGalleryImagesCount = 0;
+  mapLoaded = false;
+  mapError = false;
 
   // Array de imágenes para el slider de fondo
   heroImages = [
@@ -26,6 +33,76 @@ export class HomeComponent implements OnInit, OnDestroy {
     '/hero-slides/4.png',
     '/hero-slides/5.png'
   ];
+  galery = [
+    '/galery/1.jpg',
+    '/galery/2.jpg',
+    '/galery/3.jpg',
+    '/galery/4.jpg',
+    '/galery/5.jpg',
+    '/galery/6.jpg',
+    '/galery/7.jpg'
+  ];
+
+  // Array de logos de aliados educativos
+  partnerLogos = [
+    '/edu-logos/beneficencia-senoras.png',
+    '/edu-logos/cees.jpg',
+    '/edu-logos/cen.png',
+    '/edu-logos/copei.png',
+    '/edu-logos/emerson.png',
+    '/edu-logos/gente-gestion.png',
+    '/edu-logos/hispanoamericano.jpg',
+    '/edu-logos/idiu-pacifico.png',
+    '/edu-logos/jeferson.png',
+    '/edu-logos/jorligroup.png',
+    '/edu-logos/letras-vida.png',
+    '/edu-logos/lexa.png',
+    '/edu-logos/liceo-cristiano.png',
+    '/edu-logos/medikal.jpg',
+    '/edu-logos/pinturas-unidas.png',
+    '/edu-logos/republica-francia.jpg',
+    '/edu-logos/rocnarf.png',
+    '/edu-logos/san-luis-francia.png',
+    '/edu-logos/spirit.png',
+    '/edu-logos/taurus.png',
+    '/edu-logos/tes.png',
+    '/edu-logos/u-pacifico.png',
+    '/edu-logos/ucg.png',
+    '/edu-logos/ucsg.png',
+    '/edu-logos/uees.png',
+    '/edu-logos/uelt.png',
+    '/edu-logos/uide-1.png',
+    '/edu-logos/varso.png'
+  ];
+
+  // Configuración del mapa de Google
+  mapCenter: google.maps.LatLngLiteral = {
+    lat: -2.1894191, // Coordenadas de Guayaquil, Ecuador (puedes cambiar por la ubicación de la fundación)
+    lng: -79.8890104
+  };
+  mapZoom = 15;
+  mapOptions: google.maps.MapOptions = {
+    mapTypeId: 'roadmap',
+    disableDefaultUI: false,
+    styles: [
+      {
+        featureType: 'poi',
+        elementType: 'labels',
+        stylers: [{ visibility: 'off' }]
+      }
+    ]
+  };
+
+  // Marcador en el mapa
+  markerPosition: google.maps.LatLngLiteral = {
+    lat: -2.1894191,
+    lng: -79.8890104
+  };
+
+  markerOptions: google.maps.MarkerOptions = {
+    draggable: false,
+    title: 'Fundación Leonidas Ortega Moreira'
+  };
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     this.isBrowser = isPlatformBrowser(this.platformId);
@@ -35,6 +112,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     // Solo ejecutar en el navegador, no en el servidor
     if (this.isBrowser) {
       this.preloadImages();
+      this.preloadGalleryImages();
+      this.preloadProgramImages();
+      this.checkGoogleMapsAvailability();
+      this.startPartnersCarousel();
       // Activar animación después de un pequeño delay
       setTimeout(() => {
         this.foundationSectionVisible = true;
@@ -45,6 +126,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.slideInterval) {
       clearInterval(this.slideInterval);
+    }
+    if (this.partnersInterval) {
+      clearInterval(this.partnersInterval);
     }
   }
 
@@ -69,6 +153,47 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
       };
       img.src = imageSrc;
+    });
+  }
+
+  preloadGalleryImages() {
+    if (!this.isBrowser) {
+      this.galleryImagesLoaded = true;
+      return;
+    }
+
+    this.galery.forEach((imageSrc, index) => {
+      const img = new Image();
+      img.onload = () => {
+        this.loadedGalleryImagesCount++;
+        if (this.loadedGalleryImagesCount === this.galery.length) {
+          this.galleryImagesLoaded = true;
+          console.log('Gallery images loaded successfully');
+        }
+      };
+      img.onerror = () => {
+        console.warn(`Failed to load gallery image: ${imageSrc}`);
+        this.loadedGalleryImagesCount++;
+        if (this.loadedGalleryImagesCount === this.galery.length) {
+          this.galleryImagesLoaded = true;
+        }
+      };
+      img.src = imageSrc;
+    });
+  }
+
+  preloadProgramImages() {
+    if (!this.isBrowser) return;
+
+    this.programs.forEach((program, index) => {
+      const img = new Image();
+      img.onload = () => {
+        console.log(`Program image ${index + 1} loaded successfully: ${program.img}`);
+      };
+      img.onerror = () => {
+        console.warn(`Failed to load program image: ${program.img}`);
+      };
+      img.src = '/' + program.img;
     });
   }
 
@@ -187,22 +312,58 @@ export class HomeComponent implements OnInit, OnDestroy {
     return this.testimonials[this.currentTestimonial];
   }
 
+  // Método para verificar si la galería está lista para mostrar
+  isGalleryReady(): boolean {
+    return this.galleryImagesLoaded || !this.isBrowser;
+  }
+
+  // Métodos para el carrusel de aliados
+  startPartnersCarousel() {
+    if (this.isBrowser) {
+      this.partnersInterval = setInterval(() => {
+        this.nextPartnersSlide();
+      }, 6000); // Cambiar cada 6 segundos
+    }
+  }
+
+  nextPartnersSlide() {
+    // Calcular cuántos grupos de 5 logos hay
+    const totalSlides = Math.ceil(this.partnerLogos.length / 5);
+    this.currentPartnerSlide = (this.currentPartnerSlide + 1) % totalSlides;
+  }
+
+  getCurrentPartnerLogos() {
+    const startIndex = this.currentPartnerSlide * 5;
+    return this.partnerLogos.slice(startIndex, startIndex + 5);
+  }
+
+  getPartnerGroups() {
+    const groups = [];
+    for (let i = 0; i < this.partnerLogos.length; i += 5) {
+      groups.push(this.partnerLogos.slice(i, i + 5));
+    }
+    return groups;
+  }
+
   programs = [
     {
       title: 'Programa de Becas',
       description: 'Becas para estudiantes talentosos con necesidades económicas',
+      img: 'testimonios/foto-home-1.jpg',
       icon: 'graduation-cap',
       link: '/educacion'
     },
     {
       title: 'Programa de Liderazgo y Voluntariado',
       description: 'Formación integral para líderes comunitarios',
+      img: 'testimonios/foto-home-3.jpg',
       icon: 'users',
       link: '/liderazgo'
     },
     {
       title: 'Educacion Continua',
       description: 'Actividades de actualización profesional',
+      img: 'testimonios/foto-home-2.jpg',
       icon: 'users',
       link: '/liderazgo'
     }
@@ -211,5 +372,31 @@ export class HomeComponent implements OnInit, OnDestroy {
   onContactSubmit(event: Event) {
     event.preventDefault();
     console.log('Contact form submitted');
+    // Aquí puedes agregar la lógica para manejar el envío del formulario
+  }
+
+  // Método para manejar errores de carga de imágenes de testimonios
+  onTestimonialImageError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    img.src = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80';
+  }
+
+  // Método para verificar la disponibilidad de Google Maps
+  checkGoogleMapsAvailability() {
+    if (this.isBrowser) {
+      // Verificar si Google Maps está disponible
+      setTimeout(() => {
+        if (typeof google !== 'undefined' && google.maps) {
+          this.mapLoaded = true;
+          console.log('Google Maps cargado correctamente');
+        } else {
+          this.mapError = true;
+          console.warn('Google Maps API no está disponible. Mostrando fallback.');
+        }
+      }, 3000); // Dar más tiempo para que cargue la API
+    } else {
+      // En SSR, siempre mostrar el fallback
+      this.mapError = true;
+    }
   }
 }

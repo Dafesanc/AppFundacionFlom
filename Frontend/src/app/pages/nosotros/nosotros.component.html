@@ -2,7 +2,7 @@
 <nav class="bg-gray-50 py-4">
   <div class="max-w-screen-xl mx-auto px-4">
     <ol class="flex items-center space-x-2 text-sm text-gray-600">
-      <li><a href="/" class="hover:text-flom-blue">Inicio</a></li>
+      <li><a href="/" class="hover:text-[#0066cc]">Inicio</a></li>
       <li class="text-gray-400">∕</li>
       <li class="text-gray-800 font-medium">Nosotros</li>
     </ol>
@@ -10,8 +10,8 @@
 </nav>
 
 <!-- Hero Section -->
-<section class="bg-gradient-to-r from-flom-blue to-flom-dark-blue text-white py-16">
-  <div class="max-w-screen-xl mx-auto px-4 text-center">
+<section class="hero-banner py-16 text-white">
+  <div class="hero-content max-w-screen-xl mx-auto px-4 text-center">
     <h1 class="text-4xl md:text-5xl font-bold mb-6">Conoce FLOM</h1>
     <p class="text-xl max-w-3xl mx-auto">
       Fundación Leonidas Ortega Moreira - Transformando vidas a través de la educación desde 1992
@@ -32,11 +32,36 @@
           </p>
         </div>
       </div>
-      <div class="bg-gray-200 aspect-video rounded-lg flex items-center justify-center">
-        <!-- Placeholder para imagen histórica -->
-        <svg class="w-16 h-16 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
-        </svg>
+      <div class="bg-gray-200 aspect-video rounded-lg overflow-hidden">
+        <!-- Mostrar imagen solo en el navegador -->
+        <div *ngIf="isBrowser" class="w-full h-full flex items-center justify-center">
+          <img class="w-full h-full object-cover rounded-lg"
+               src="/testimonios/instalaciones1.jpg"
+               alt="Instalaciones de la Fundación FLOM"
+               loading="lazy"
+               (error)="onImageError($event)">
+        </div>
+
+        <!-- Fallback para SSR y errores de carga -->
+        <div *ngIf="!isBrowser" class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+          <div class="text-center">
+            <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+            </svg>
+            <p class="text-gray-500 text-sm">Instalaciones FLOM</p>
+          </div>
+        </div>
+
+        <!-- Fallback si la imagen no carga -->
+        <div class="w-full h-full items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 hidden"
+             id="fallback-image">
+          <div class="text-center">
+            <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+            </svg>
+            <p class="text-gray-500 text-sm">Instalaciones FLOM</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -52,8 +77,8 @@
 
     <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
       <div *ngFor="let achievement of achievements"
-           class="text-center bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">
-        <div class="text-3xl md:text-4xl font-bold text-flom-blue mb-2">{{ achievement.number }}</div>
+           class="achievement-card text-center bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">
+        <div class="text-3xl md:text-4xl font-bold text-[#0066cc] mb-2">{{ achievement.number }}</div>
         <div class="text-gray-700 font-medium">{{ achievement.description }}</div>
       </div>
     </div>
@@ -65,9 +90,9 @@
   <div class="max-w-screen-xl mx-auto px-4">
     <div class="grid lg:grid-cols-2 gap-12">
       <!-- Misión -->
-      <div class="bg-white rounded-lg shadow-lg p-8">
+      <div class="mission-vision-card bg-white rounded-lg shadow-lg p-8">
         <div class="flex items-center mb-6">
-          <div class="bg-flom-blue text-white p-3 rounded-full mr-4">
+          <div class="bg-[#0066cc] text-white p-3 rounded-full mr-4">
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
             </svg>
@@ -78,9 +103,9 @@
       </div>
 
       <!-- Visión -->
-      <div class="bg-white rounded-lg shadow-lg p-8">
+      <div class="mission-vision-card vision-card bg-white rounded-lg shadow-lg p-8">
         <div class="flex items-center mb-6">
-          <div class="bg-flom-orange text-white p-3 rounded-full mr-4">
+          <div class="bg-[#ff6600] text-white p-3 rounded-full mr-4">
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
               <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
               <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
@@ -104,8 +129,8 @@
 
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
       <div *ngFor="let value of values"
-           class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-        <h4 class="text-xl font-semibold text-flom-blue mb-3">{{ value.name }}</h4>
+           class="value-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+        <h4 class="text-xl font-semibold text-[#0066cc] mb-3">{{ value.name }}</h4>
         <p class="text-gray-700">{{ value.description }}</p>
       </div>
     </div>
@@ -113,7 +138,7 @@
 </section>
 
 <!-- CTA Section -->
-<section class="py-16 bg-flom-blue text-white">
+<section class="py-16 bg-[#0066cc] text-white">
   <div class="max-w-screen-xl mx-auto px-4 text-center">
     <h2 class="text-3xl md:text-4xl font-bold mb-6">¿Quieres ser parte de FLOM?</h2>
     <p class="text-xl mb-8 max-w-2xl mx-auto">
@@ -121,11 +146,11 @@
     </p>
     <div class="space-x-4">
       <a href="#contacto"
-         class="bg-flom-orange hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors inline-block">
+         class="bg-[#ff6600] hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors inline-block">
         CONTÁCTANOS
       </a>
       <a href="/educacion"
-         class="border-2 border-white text-white hover:bg-white hover:text-flom-blue px-8 py-3 rounded-lg font-semibold transition-colors inline-block">
+         class="border-2 border-white text-white hover:bg-white hover:text-[#0066cc] px-8 py-3 rounded-lg font-semibold transition-colors inline-block">
         VER PROGRAMAS
       </a>
     </div>

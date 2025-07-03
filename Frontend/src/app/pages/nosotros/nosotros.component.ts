@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-nosotros',
@@ -9,6 +9,12 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./nosotros.component.css']
 })
 export class NosotrosComponent {
+  isBrowser: boolean;
+
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+  }
+
   mission = {
     title: 'Nuestra Misión',
     description: 'Promover la educación y la cultura a través de programas de becas y formación integral para jóvenes talentosos con necesidades económicas, contribuyendo al desarrollo social del país.'
@@ -74,4 +80,14 @@ export class NosotrosComponent {
       description: 'Tasa de graduación'
     }
   ];
+
+  onImageError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    img.style.display = 'none';
+    const fallback = img.nextElementSibling as HTMLElement;
+    if (fallback) {
+      fallback.classList.remove('hidden');
+      fallback.classList.add('flex');
+    }
+  }
 }

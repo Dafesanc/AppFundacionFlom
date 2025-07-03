@@ -6,6 +6,25 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!-- Google Maps API - Usando una clave de desarrollo (limitada) -->
+  <!-- Para producción, reemplaza con tu propia API Key -->
+  <script>
+    // Verificar si Google Maps está disponible
+    function initMap() {
+      console.log('Google Maps API script cargado');
+    }
+
+    // Fallback si Google Maps no carga
+    setTimeout(() => {
+      if (typeof google === 'undefined') {
+        console.warn('Google Maps no se pudo cargar. Mostrando fallback.');
+      }
+    }, 5000);
+  </script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAp26yfDfcQbif8aGrbgZMedZ3a8f_twRA&libraries=places&callback=initMap"
+    onerror="console.error('Error al cargar Google Maps');">
+  </script>
 </head>
 <body>
   <app-root></app-root>

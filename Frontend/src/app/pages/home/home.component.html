@@ -6,15 +6,12 @@
   </div>
 
   <!-- Slides de fondo -->
-  <div *ngFor="let image of heroImages; let i = index"
-       class="hero-slide"
-       [class.active]="i === currentSlide && imagesLoaded"
-       [style.background-image]="'url(' + image + ')'">
+  <div *ngFor="let image of heroImages; let i = index" class="hero-slide"
+    [class.active]="i === currentSlide && imagesLoaded" [style.background-image]="'url(' + image + ')'">
   </div>
 
   <!-- Fallback background for SSR -->
-  <div *ngIf="!isBrowser" class="hero-slide active"
-       [style.background-image]="'url(' + heroImages[0] + ')'">
+  <div *ngIf="!isBrowser" class="hero-slide active" [style.background-image]="'url(' + heroImages[0] + ')'">
   </div>
 
   <!-- Overlay con gradiente -->
@@ -35,11 +32,11 @@
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <a routerLink="/educacion"
-             class="bg-[#ff6600] hover:bg-orange-600 text-white px-10 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+            class="bg-[#ff6600] hover:bg-orange-600 text-white px-10 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
             CONOCE NUESTROS PROGRAMAS
           </a>
           <a href="#contacto"
-             class="border-2 border-white text-white hover:bg-white hover:text-[#0066cc] px-10 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105">
+            class="border-2 border-white text-white hover:bg-white hover:text-[#0066cc] px-10 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105">
             CONTÁCTANOS
           </a>
         </div>
@@ -49,51 +46,36 @@
 
   <!-- Indicadores de slides -->
   <div class="slide-indicators">
-    <div *ngFor="let image of heroImages; let i = index"
-         class="indicator"
-         [class.active]="i === currentSlide"
-         (click)="goToSlide(i)">
+    <div *ngFor="let image of heroImages; let i = index" class="indicator" [class.active]="i === currentSlide"
+      (click)="goToSlide(i)">
     </div>
   </div>
 </section>
-
-<!-- Hero Section Alternativo (comentado) -->
-<!--
-<section class="bg-gradient-to-r from-[#0066cc] to-[#004499] text-white py-20">
-  <div class="max-w-screen-xl mx-auto px-4 text-center">
-    <h1 class="text-4xl md:text-6xl font-bold mb-6">Al servicio de la educación y la cultura</h1>
-    <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-      Con más de 32 años de experiencia en el servicio a la comunidad educativa
-    </p>
-    <div class="space-x-4">
-      <a routerLink="/educacion"
-         class="bg-[#ff6600] hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors inline-block">
-        CONOCE NUESTROS PROGRAMAS
-      </a>
-      <a href="#contacto"
-         class="border-2 border-white text-white hover:bg-white hover:text-[#0066cc] px-8 py-3 rounded-lg font-semibold transition-colors inline-block">
-        CONTÁCTANOS
-      </a>
-    </div>
-  </div>
-</section>
--->
 
 <!-- Programas Sociales Section -->
 <section class="bg-white dark:bg-gray-900">
-    <div class="container px-6 py-10 mx-auto">
-        <h1 class="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl dark:text-white">
-            Programas Sociales</h1>
-        <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 lg:grid-cols-3">
-            <div *ngFor="let program of programs" class="flex items-end overflow-hidden bg-cover rounded-lg h-96 program-card">
-                <div class="w-full px-8 py-4 overflow-hidden rounded-b-lg backdrop-blur-sm bg-white/60 dark:bg-gray-800/60">
-                    <h2 class="mt-4 text-xl font-semibold text-gray-800 capitalize dark:text-white">
-                        {{program.title}}</h2>
-                    <p class="mt-2 text-lg tracking-wider text-blue-500 uppercase dark:text-blue-400 ">{{program.description}}</p>
-                </div>
-            </div>
+  <div class="container px-6 py-10 mx-auto">
+    <h1 class="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl dark:text-white">
+      Programas Sociales</h1>
+    <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 lg:grid-cols-3">
+      <div *ngFor="let program of programs" class="flex items-end overflow-hidden bg-cover rounded-lg h-96 program-card"
+        [style.background-image]="'url(/' + program.img + ')'" [style.background-size]="'cover'"
+        [style.background-position]="'center'" [style.background-repeat]="'no-repeat'">
+
+        <!-- Fallback background gradient if image fails to load -->
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-800 opacity-20 rounded-lg"></div>
+
+        <div
+          class="w-full px-8 py-4 overflow-hidden rounded-b-lg backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 relative z-10">
+          <h2 class="mt-4 text-xl font-semibold text-gray-800 capitalize dark:text-white">
+            {{program.title}}</h2>
+          <p class="mt-2 text-lg tracking-wider text-blue-600 uppercase dark:text-blue-400 font-medium">
+            {{program.description}}
+          </p>
         </div>
+      </div>
     </div>
+  </div>
 </section>
 
 <!-- Conoce más sobre la Fundación Section -->
@@ -104,32 +86,33 @@
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-      <div *ngFor="let info of foundationInfo; let i = index"
-           class="foundation-card"
-           [class.foundation-card-visible]="foundationSectionVisible"
-           [style.animation-delay]="(i * 0.2) + 's'">
+      <div *ngFor="let info of foundationInfo; let i = index" class="foundation-card"
+        [class.foundation-card-visible]="foundationSectionVisible" [style.animation-delay]="(i * 0.2) + 's'">
 
         <!-- Icono -->
         <div class="text-center mb-6">
           <div class="w-16 h-16 mx-auto mb-4 text-white">
             <!-- Icono Calendario -->
             <svg *ngIf="info.icon === 'calendar'" class="w-full h-full" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M7 2h2v2H7zM15 2h2v2h-2zM6 6h12a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2zm0 2v2h12V8H6zm0 4v8h12v-8H6z"/>
+              <path
+                d="M7 2h2v2H7zM15 2h2v2h-2zM6 6h12a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2zm0 2v2h12V8H6zm0 4v8h12v-8H6z" />
             </svg>
 
             <!-- Icono Estrella -->
             <svg *ngIf="info.icon === 'star'" class="w-full h-full" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
             </svg>
 
             <!-- Icono Corazón con mano -->
             <svg *ngIf="info.icon === 'heart-hand'" class="w-full h-full" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              <path
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
             </svg>
 
             <!-- Icono Maletín -->
             <svg *ngIf="info.icon === 'briefcase'" class="w-full h-full" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M10 2h4a2 2 0 012 2v2h4a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h4V4a2 2 0 012-2zm0 2v2h4V4h-4zM4 8v12h16V8H4z"/>
+              <path
+                d="M10 2h4a2 2 0 012 2v2h4a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h4V4a2 2 0 012-2zm0 2v2h4V4h-4zM4 8v12h16V8H4z" />
             </svg>
           </div>
         </div>
@@ -145,157 +128,321 @@
 </section>
 
 <!-- Testimonios Section -->
-<!--Testimonios-->
 <section class="bg-white dark:bg-gray-900">
-    <div class="relative flex">
-        <div class="min-h-screen lg:w-1/3"></div>
-        <div class="hidden w-3/4 min-h-screen bg-gray-100 dark:bg-gray-800 lg:block">
-        </div>
-
-        <div
-            class="container flex flex-col justify-center w-full min-h-screen px-6 py-10 mx-auto lg:absolute lg:inset-x-0">
-            <h1 class="text-2xl font-semibold text-gray-800 capitalize lg:text-3xl dark:text-white">
-                Historias que <span class="text-blue-500">inspiran</span> <br> y transforman vidas
-            </h1>
-
-            <div class="mt-10 lg:mt-20 lg:flex lg:items-center">
-                <div class="testimonial-container">
-                    <img class="testimonial-image"
-                         [src]="getCurrentTestimonial().image"
-                         [attr.alt]="getCurrentTestimonial().name + ' - ' + getCurrentTestimonial().title"
-                         [attr.title]="getCurrentTestimonial().name + ' - ' + getCurrentTestimonial().title"
-                         onerror="this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'"
-                         alt="Testimonial Image">
-                </div>
-
-                <div class="mt-8 lg:px-10 lg:mt-0">
-                    <h1 class="text-2xl font-semibold text-gray-800 dark:text-white lg:w-72">
-                        {{ getCurrentTestimonial().name }}
-                    </h1>
-
-                    <h2 class="text-lg font-medium text-blue-500 mt-2">
-                        {{ getCurrentTestimonial().title }}
-                    </h2>
-
-                    <h3 class="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                        {{ getCurrentTestimonial().subtitle }}
-                    </h3>
-
-                    <p class="max-w-lg mt-6 text-gray-500 dark:text-gray-400 leading-relaxed">
-                        "{{ getCurrentTestimonial().text }}"
-                    </p>
-                </div>
-            </div>
-
-            <div class="flex items-center justify-between mt-12 lg:justify-start">
-                <button (click)="previousTestimonial()"
-                        title="Testimonio anterior"
-                        class="p-2 text-gray-800 transition-colors duration-300 border rounded-full rtl:-scale-x-100 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-                    </svg>
-                </button>
-
-                <button (click)="nextTestimonial()"
-                        title="Siguiente testimonio"
-                        class="p-2 text-gray-800 transition-colors duration-300 border rounded-full rtl:-scale-x-100 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 lg:mx-6 hover:bg-gray-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                    </svg>
-                </button>
-
-                <!-- Indicadores de posición -->
-                <div class="flex space-x-2 ml-4 testimonial-indicators">
-                    <span *ngFor="let testimonial of testimonials; let i = index"
-                          [class]="i === currentTestimonial ? 'w-3 h-3 bg-blue-500 rounded-full' : 'w-2 h-2 bg-gray-300 rounded-full'"
-                          class="transition-all duration-300 cursor-pointer"
-                          (click)="currentTestimonial = i"
-                          [title]="'Ver testimonio de ' + testimonial.name">
-                    </span>
-                </div>
-            </div>
-        </div>
+  <div class="relative flex">
+    <div class="min-h-screen lg:w-1/3"></div>
+    <div class="hidden w-3/4 min-h-screen bg-gray-100 dark:bg-gray-800 lg:block">
     </div>
+
+    <div class="container flex flex-col justify-center w-full min-h-screen px-6 py-10 mx-auto lg:absolute lg:inset-x-0">
+      <h1 class="text-2xl font-semibold text-gray-800 capitalize lg:text-3xl dark:text-white">
+        Historias que <span class="text-blue-500">inspiran</span> <br> y transforman vidas
+      </h1>
+
+      <div class="mt-10 lg:mt-20 lg:flex lg:items-center">
+        <div class="testimonial-container">
+          <img class="testimonial-image"
+               [src]="getCurrentTestimonial().image"
+               [attr.alt]="getCurrentTestimonial().name + ' - ' + getCurrentTestimonial().title"
+               [attr.title]="getCurrentTestimonial().name + ' - ' + getCurrentTestimonial().title"
+               (error)="onTestimonialImageError($event)"
+               alt="Testimonial Image">
+        </div>
+
+        <div class="mt-8 lg:px-10 lg:mt-0 ml-12">
+          <h1 class="text-2xl font-semibold text-gray-800 dark:text-white lg:w-72">
+            {{ getCurrentTestimonial().name }}
+          </h1>
+
+          <h2 class="text-lg font-medium text-blue-500 mt-2">
+            {{ getCurrentTestimonial().title }}
+          </h2>
+
+          <h3 class="text-sm text-gray-600 dark:text-gray-300 mt-1">
+            {{ getCurrentTestimonial().subtitle }}
+          </h3>
+
+          <p class="max-w-lg mt-6 text-gray-500 dark:text-gray-400 leading-relaxed">
+            "{{ getCurrentTestimonial().text }}"
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between mt-12 lg:justify-start">
+        <button (click)="previousTestimonial()" title="Testimonio anterior"
+          class="p-2 text-gray-800 transition-colors duration-300 border rounded-full rtl:-scale-x-100 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <button (click)="nextTestimonial()" title="Siguiente testimonio"
+          class="p-2 text-gray-800 transition-colors duration-300 border rounded-full rtl:-scale-x-100 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 lg:mx-6 hover:bg-gray-100">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+
+        <!-- Indicadores de posición -->
+        <div class="flex space-x-2 ml-4 testimonial-indicators">
+          <span *ngFor="let testimonial of testimonials; let i = index"
+            [class]="i === currentTestimonial ? 'w-3 h-3 bg-blue-500 rounded-full' : 'w-2 h-2 bg-gray-300 rounded-full'"
+            class="transition-all duration-300 cursor-pointer" (click)="currentTestimonial = i"
+            [title]="'Ver testimonio de ' + testimonial.name">
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- Galería Section -->
 <section class="py-16 bg-gray-50">
   <div class="max-w-screen-xl mx-auto px-4 text-center">
     <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-8">
-      en el servicio a la comunidad educativa
+      32 años en el servicio a la comunidad educativa
     </h2>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-      <!-- Placeholder para galería de imágenes -->
-      <div *ngFor="let i of [1,2,3,4,5,6,7,8]"
-           class="aspect-square bg-gray-300 rounded-lg hover:opacity-80 transition-opacity cursor-pointer">
-        <div class="w-full h-full flex items-center justify-center text-gray-500">
-          <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
-          </svg>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+      <!-- Estado de carga para galería -->
+      <ng-container *ngIf="!galleryImagesLoaded && isBrowser">
+        <div *ngFor="let i of [1,2,3,4,5,6]" class="aspect-square bg-gray-200 rounded-lg animate-pulse">
+          <div class="w-full h-full flex items-center justify-center text-gray-400">
+            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd"
+                d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                clip-rule="evenodd"></path>
+            </svg>
+          </div>
         </div>
-      </div>
+      </ng-container>
+
+      <!-- Galería de imágenes -->
+      <ng-container *ngIf="galleryImagesLoaded || !isBrowser">
+        <div *ngFor="let imageUrl of galery; let index = index"
+          class="aspect-square bg-gray-300 rounded-lg hover:opacity-80 transition-opacity cursor-pointer overflow-hidden">
+          <img [src]="imageUrl" [alt]="'Imagen de galería ' + (index + 1)" [title]="'Imagen de galería ' + (index + 1)"
+            class="w-full h-full object-cover rounded-lg" loading="lazy" aria-label="Imagenes de galería">
+        </div>
+      </ng-container>
     </div>
 
     <a href="#" class="bg-[#0066cc] hover:bg-[#004499] text-white px-8 py-3 rounded-lg font-semibold transition-colors">
-      LEER MÁS
+      VER MÁS FOTOS
     </a>
   </div>
 </section>
 
 <!-- Contacto Section -->
-<section id="contacto" class="py-16">
+<section id="contacto" class="py-16 bg-black">
   <div class="max-w-screen-xl mx-auto px-4">
     <div class="text-center mb-12">
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Contáctenos</h2>
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-200 mb-4">Contáctenos</h2>
     </div>
 
-    <div class="max-w-2xl mx-auto">
-      <form (submit)="onContactSubmit($event)" class="space-y-6">
-        <div class="grid md:grid-cols-2 gap-6">
-          <div>
-            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nombre y Apellido</label>
-            <input type="text" id="name" name="name" required
-                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-[#0066cc] focus:border-[#0066cc]">
+    <!-- Grid de 2 columnas: Formulario y Mapa -->
+    <div class="grid lg:grid-cols-2 gap-8">
+      <!-- Columna del Formulario -->
+      <div class="order-2 lg:order-1">
+        <div class="bg-white p-6 rounded-lg border-2 border-gray-300">
+          <form (submit)="onContactSubmit($event)" class="space-y-6">
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nombre y Apellido</label>
+                <input type="text" id="name" name="name" required
+                  class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-[#0066cc] focus:border-[#0066cc]">
+              </div>
+              <div>
+                <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Teléfono de contacto</label>
+                <input type="tel" id="phone" name="phone"
+                  class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-[#0066cc] focus:border-[#0066cc]">
+              </div>
+            </div>
+
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 mb-2">E-Mail</label>
+              <input type="email" id="email" name="email" required
+                class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-[#0066cc] focus:border-[#0066cc]">
+            </div>
+
+            <div>
+              <label for="help-type" class="block text-sm font-medium text-gray-700 mb-2">ME GUSTARÍA AYUDAR:</label>
+              <select id="help-type" name="help-type"
+                class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-[#004499] focus:border-[#0066cc]">
+                <option value="">Seleccione el tipo de ayuda</option>
+                <option value="donacion">Donación</option>
+                <option value="donacion-5">Aporte económico de 5 dólares</option>
+                <option value="donacion-10">Aporte económico de 10 dólares</option>
+                <option value="donacion-otro">Aporte económico de otro valor</option>
+                <option value="voluntariado">Voluntariado</option>
+                <option value="patrocinio">Patrocinio</option>
+                <option value="otro">Otro</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Mensaje</label>
+              <textarea id="message" name="message" rows="5"
+                class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-[#0066cc] focus:border-[#0066cc]"></textarea>
+            </div>
+
+            <div class="text-center">
+              <button type="submit"
+                class="w-full bg-[#ff6600] hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
+                Enviar Mensaje
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Columna del Mapa -->
+      <div class="order-1 lg:order-2">
+        <div class="bg-white p-6 rounded-lg border-2 border-gray-300 h-full">
+          <h3 class="text-xl font-semibold text-gray-800 mb-4">Nuestra Ubicación</h3>
+
+          <!-- Información de contacto -->
+          <div class="mb-6 space-y-3">
+            <div class="flex items-start space-x-3">
+              <svg class="w-5 h-5 text-[#0066cc] mt-1" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                  d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              <div>
+                <p class="text-sm font-medium text-gray-800">Dirección:</p>
+                <p class="text-sm text-gray-600">Av. Francisco de Orellana y 9 de Octubre<br>Edificio World Trade
+                  Center, Torre B, Piso 14<br>Guayaquil, Ecuador</p>
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-3">
+              <svg class="w-5 h-5 text-[#0066cc] mt-1" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z">
+                </path>
+              </svg>
+              <div>
+                <p class="text-sm font-medium text-gray-800">Teléfono:</p>
+                <p class="text-sm text-gray-600">+593 4 123-4567</p>
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-3">
+              <svg class="w-5 h-5 text-[#0066cc] mt-1" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+              </svg>
+              <div>
+                <p class="text-sm font-medium text-gray-800">Email:</p>
+                <p class="text-sm text-gray-600">info&#64;flom.org.ec</p>
+              </div>
+            </div>
           </div>
-          <div>
-            <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Teléfono de contacto</label>
-            <input type="tel" id="phone" name="phone"
-                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-[#0066cc] focus:border-[#0066cc]">
+
+          <!-- Mapa de Google -->
+          <div class="h-64 lg:h-80 rounded-lg overflow-hidden border border-gray-200">
+            <!-- Mostrar mapa si está disponible -->
+            <google-map *ngIf="mapLoaded && !mapError" [center]="mapCenter" [zoom]="mapZoom" [options]="mapOptions"
+              class="w-full h-full">
+              <map-marker [position]="markerPosition" [options]="markerOptions">
+              </map-marker>
+            </google-map>
+
+            <!-- Mostrar placeholder mientras carga -->
+            <div *ngIf="!mapLoaded && !mapError" class="w-full h-full flex items-center justify-center bg-gray-100">
+              <div class="text-center">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
+                <p class="text-gray-600">Cargando mapa...</p>
+              </div>
+            </div>
+
+            <!-- Mostrar información de ubicación como fallback -->
+            <div *ngIf="mapError"
+              class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+              <div class="text-center w-full">
+                <div class="bg-white rounded-lg shadow-lg p-6 max-w-full">
+                  <!-- Imagen de mapa estático como fondo -->
+                  <div class="relative mb-4 h-32 bg-gray-200 rounded-lg overflow-hidden">
+                    <div
+                      class="absolute inset-0 bg-gradient-to-br from-blue-100 to-indigo-200 flex items-center justify-center">
+                      <div class="text-center">
+                        <div class="text-blue-600 mb-2">
+                          <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                            </path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                          </svg>
+                        </div>
+                        <p class="text-blue-800 text-sm font-medium">Guayaquil, Ecuador</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <h4 class="text-lg font-semibold text-gray-800 mb-2">Fundación Leonidas Ortega Moreira</h4>
+                  <p class="text-sm text-gray-600 mb-4">Av. Francisco de Orellana y 9 de Octubre<br>World Trade Center,
+                    Torre B, Piso 14</p>
+
+                  <div class="flex flex-col sm:flex-row gap-2 justify-center">
+                    <a href="https://maps.google.com/?q=-2.1894191,-79.8890104" target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm">
+                      📍 Ver en Google Maps
+                    </a>
+                    <a href="https://www.openstreetmap.org/?mlat=-2.1894191&mlon=-79.8890104#map=16/-2.1894191/-79.8890104"
+                      target="_blank" rel="noopener noreferrer"
+                      class="inline-block px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm">
+                      🗺️ Ver en OpenStreetMap
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Aliados comprometidos con la educación Section -->
+<section class="py-16 bg-white">
+  <div class="max-w-screen-xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+        Aliados comprometidos por la educación
+      </h2>
+      <p class="text-lg text-gray-600">
+        Gracias por promover la formación de líderes
+      </p>
+    </div>
 
-        <div>
-          <label for="email" class="block text-sm font-medium text-gray-700 mb-2">E-Mail</label>
-          <input type="email" id="email" name="email" required
-                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-[#0066cc] focus:border-[#0066cc]">
-        </div>
+    <!-- Carrusel de logos -->
+    <div class="relative overflow-hidden partners-carousel">
+      <div class="flex transition-transform duration-1000 ease-in-out carousel-track"
+        [style.transform]="'translateX(-' + (currentPartnerSlide * 100) + '%)'">
 
-        <div>
-          <label for="help-type" class="block text-sm font-medium text-gray-700 mb-2">ME GUSTARÍA AYUDAR:</label>
-          <select id="help-type" name="help-type"
-                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-[#004499] focus:border-[#0066cc]">
-            <option value="">Seleccione el tipo de ayuda</option>
-            <option value="donacion">Donación</option>
-            <option value="voluntariado">Voluntariado</option>
-            <option value="patrocinio">Patrocinio</option>
-            <option value="otro">Otro</option>
-          </select>
-        </div>
+        <!-- Grupos de 5 logos -->
+        <div *ngFor="let group of getPartnerGroups(); let i = index"
+          class="w-full flex-shrink-0 flex justify-center items-center gap-8 lg:gap-12 px-4">
 
-        <div>
-          <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Mensaje</label>
-          <textarea id="message" name="message" rows="5"
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-[#0066cc] focus:border-[#0066cc]"></textarea>
+          <div *ngFor="let logo of group; let j = index" class="partner-logo w-32 h-24 lg:w-40 lg:h-28">
+            <img [src]="logo" alt="Logo de aliado educativo" title="Aliado educativo"
+              class="max-w-full max-h-full object-contain" loading="lazy">
+          </div>
         </div>
+      </div>
+    </div>
 
-        <div class="text-center">
-          <button type="submit"
-                  class="bg-[#ff6600] hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
-            Enviar Mensaje
-          </button>
-        </div>
-      </form>
+    <!-- Indicador sutil (opcional) -->
+    <div class="flex justify-center mt-8 space-x-2">
+      <div *ngFor="let group of getPartnerGroups(); let i = index"
+        class="w-2 h-2 rounded-full transition-colors duration-300"
+        [class]="i === currentPartnerSlide ? 'bg-blue-600' : 'bg-gray-300'">
+      </div>
     </div>
   </div>
 </section>
