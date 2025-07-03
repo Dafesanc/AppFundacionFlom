@@ -1,0 +1,251 @@
+/* Hero Slider Styles */
+.hero-slider {
+  position: relative;
+  height: 100vh;
+  min-height: 600px; /* Altura mínima para móviles */
+  max-height: 1080px; /* Altura máxima para pantallas muy grandes */
+  overflow: hidden;
+  background-color: black;
+  /* background-color: #0066cc; Color de fondo mientras cargan las imágenes */
+}
+
+/* Loading State */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg,
+    rgba(25, 22, 34, 0.5) 0%,
+    rgba(0, 0, 0, 0.95) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid #ffffff;
+  border-radius: 50%;
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.hero-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+  will-change: opacity; /* Optimización para GPU */
+}
+
+.hero-slide.active {
+  opacity: 0.8; /* 80% de opacidad como solicitaste */
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* background: linear-gradient(135deg,
+    rgba(0, 102, 204, 0.7) 0%,
+    rgba(0, 68, 153, 0.8) 50%,
+    rgba(0, 34, 102, 0.9) 100%); */
+  background: linear-gradient(135deg,
+    rgba(47, 50, 63, 0.7) 0%,
+    rgba(25, 22, 34, 0.8) 50%,
+    rgba(0, 0, 0, 0.9) 100%);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.slide-indicators {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.75rem;
+  z-index: 3;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 2rem;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid transparent;
+}
+
+.indicator:hover {
+  background-color: rgba(255, 255, 255, 0.6);
+  transform: scale(1.1);
+}
+
+.indicator.active {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 102, 0, 0.8);
+  transform: scale(1.2);
+}
+
+/* Estilos responsivos mejorados */
+@media (max-width: 1024px) {
+  .hero-slider {
+    height: 90vh;
+  }
+
+  .hero-slide {
+    background-attachment: scroll; /* Quitar parallax en tablets */
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-slider {
+    height: 85vh;
+    min-height: 500px;
+  }
+
+  .hero-content {
+    padding: 1.5rem 1rem;
+  }
+
+  .slide-indicators {
+    bottom: 1.5rem;
+    gap: 0.5rem;
+  }
+
+  .indicator {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-slider {
+    height: 80vh;
+    min-height: 450px;
+  }
+
+  .hero-content {
+    padding: 1rem 0.75rem;
+  }
+
+  .slide-indicators {
+    bottom: 1rem;
+    gap: 0.4rem;
+    padding: 0.75rem;
+  }
+
+  .indicator {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+/* Optimizaciones para pantallas de alta densidad */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .hero-slide {
+    background-size: cover;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+  }
+}
+
+/* Animaciones de entrada */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-content > div {
+  animation: fadeInUp 1s ease-out 0.5s both;
+}
+
+/* Estilos para la sección "Conoce más sobre la Fundación" */
+.foundation-card {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: opacity 2s ease-out, transform 2s ease-out;
+}
+
+.foundation-card-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Estilos para la sección de testimonios */
+.testimonial-image {
+  width: 100%;
+  aspect-ratio: 3/4; /* Proporción uniforme para todas las imágenes */
+  object-fit: cover;
+  object-position: center; /* Centrar la imagen */
+  border-radius: 0.5rem;
+  transition: opacity 0.3s ease-in-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial-indicators span {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.testimonial-indicators span:hover {
+  transform: scale(1.2);
+}
+
+/* Estilos para los programas sociales */
+.program-card {
+  background-image: url('https://images.unsplash.com/photo-1621111848501-8d3634f82336?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1565&q=80');
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.program-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Contenedor de testimonios */
+.testimonial-container {
+  max-width: 380px; /* Ancho máximo para mantener consistencia */
+  overflow: hidden;
+  border-radius: 0.5rem;
+}

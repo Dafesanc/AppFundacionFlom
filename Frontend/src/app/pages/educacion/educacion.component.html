@@ -1,0 +1,254 @@
+<!-- Breadcrumb -->
+<nav class="bg-gray-50 py-4">
+  <div class="max-w-screen-xl mx-auto px-4">
+    <ol class="flex items-center space-x-2 text-sm text-gray-600">
+      <li><a href="/" class="hover:text-[#0066cc]">Inicio</a></li>
+      <li class="text-gray-400">∕</li>
+      <li class="text-gray-800 font-medium">Alianza para el futuro</li>
+    </ol>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="bg-gradient-to-r from-[#0066cc] to-[#004499] text-white py-16">
+  <div class="max-w-screen-xl mx-auto px-4 text-center">
+    <h1 class="text-4xl md:text-5xl font-bold mb-6">Alianza para el futuro</h1>
+    <p class="text-xl max-w-3xl mx-auto">
+      Programa de becas educativas para estudiantes talentosos con necesidades económicas
+    </p>
+  </div>
+</section>
+
+<!-- Programa de Becas -->
+<section class="py-16">
+  <div class="max-w-screen-xl mx-auto px-4">
+    <div class="mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+        ¿Qué es el {{ scholarshipProgram.title }}?
+      </h2>
+      <div class="grid lg:grid-cols-2 gap-8">
+        <div>
+          <p class="text-gray-700 leading-relaxed mb-6">{{ scholarshipProgram.description }}</p>
+          <p class="text-gray-700 leading-relaxed">{{ scholarshipProgram.beneficiaries }}</p>
+        </div>
+        <div class="bg-gray-200 aspect-video rounded-lg flex items-center justify-center">
+          <!-- Placeholder para imagen del programa -->
+          <svg class="w-16 h-16 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tipos de Becas -->
+<section class="py-16 bg-gray-50">
+  <div class="max-w-screen-xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+        Las Becas son del 50%, 60%, 70% y 80%
+      </h2>
+      <p class="text-lg text-gray-600">(los porcentajes aplican según los términos del convenio con cada institución)</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <div *ngFor="let scholarship of scholarshipTypes"
+           class="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow">
+        <div class="text-3xl font-bold text-[#0066cc] mb-3">{{ scholarship.percentage }}</div>
+        <p class="text-gray-700 text-sm">{{ scholarship.description }}</p>
+      </div>
+    </div>
+
+    <!-- Instituciones en convenio -->
+    <div class="bg-white rounded-lg shadow-lg p-8">
+      <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+        Las Instituciones educativas en convenio actualmente:
+      </h3>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div *ngFor="let institution of institutions"
+             class="flex items-center p-3 border-l-4 border-[#0066cc] bg-gray-50">
+          <svg class="w-5 h-5 text-[#0066cc] mr-3" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          </svg>
+          <span class="text-gray-700 font-medium">{{ institution }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Cómo postular -->
+<section class="py-16">
+  <div class="max-w-screen-xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">¿Cómo puedo postular a una BECA?</h2>
+      <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+        El primer paso es participar en la CONVOCATORIA DE BECAS, una vez que escuches el video tutorial,
+        llenas el formulario de postulación de beca y entregas la carpeta con los documentos requeridos.
+      </p>
+    </div>
+
+    <!-- Pasos para postular -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <div *ngFor="let step of applicationSteps"
+           class="text-center">
+        <div class="bg-[#0066cc] text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
+          {{ step.step }}
+        </div>
+        <h4 class="text-lg font-semibold text-gray-800 mb-2">{{ step.title }}</h4>
+        <p class="text-gray-600 text-sm">{{ step.description }}</p>
+      </div>
+    </div>
+
+    <!-- Requisitos -->
+    <div class="bg-[#e6f3ff] rounded-lg p-8">
+      <h3 class="text-2xl font-bold text-gray-800 mb-6">Requisitos principales para acceder a una BECA:</h3>
+      <ul class="space-y-3">
+        <li *ngFor="let requirement of requirements"
+            class="flex items-start">
+          <svg class="w-5 h-5 text-[#00aa44] mr-3 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          </svg>
+          <span class="text-gray-700">{{ requirement }}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Calendario -->
+<section class="py-16 bg-gray-50">
+  <div class="max-w-screen-xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">CALENDARIO 2025</h2>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+      <div class="border-2 border-[#0066cc] rounded-lg p-6 inline-block">
+        <h3 class="text-xl font-bold text-[#0066cc] mb-2">ENERO</h3>
+        <p class="text-gray-700">29 Colegios y Escuelas</p>
+      </div>
+      <p class="text-gray-600 mt-6">
+        * Las fechas pueden estar sujetas a cambios. Mantente atento a nuestras comunicaciones oficiales.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonios -->
+<section class="py-16">
+  <div class="max-w-screen-xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Testimonios</h2>
+      <p class="text-lg text-gray-600">Historias de éxito de nuestros becarios</p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-8">
+      <div *ngFor="let testimonial of testimonials"
+           class="bg-white rounded-lg shadow-lg p-8">
+        <div class="flex items-center mb-6">
+          <div class="w-16 h-16 bg-gray-300 rounded-full mr-4 flex items-center justify-center">
+            <svg class="w-8 h-8 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-800">{{ testimonial.name }}</h4>
+            <p class="text-sm text-gray-600">{{ testimonial.title }}</p>
+          </div>
+        </div>
+        <p class="text-gray-700 leading-relaxed">{{ testimonial.text }}</p>
+        <a href="#" class="text-[#0066cc] hover:text-[#004499] font-semibold mt-4 inline-block">
+          Leer Más
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="py-16 bg-gray-50">
+  <div class="max-w-screen-xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">PREGUNTAS FRECUENTES</h2>
+    </div>
+
+    <div class="max-w-4xl mx-auto">
+      <div *ngFor="let faq of faqs; let i = index"
+           class="mb-4">
+        <button (click)="toggleFaq(i)"
+                class="w-full text-left bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow flex justify-between items-center">
+          <span class="font-semibold text-gray-800 pr-4">{{ i + 1 }}. {{ faq.question }}</span>
+          <svg class="w-5 h-5 text-gray-500 transform transition-transform"
+               [class.rotate-180]="openFaq === i"
+               fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        <div *ngIf="openFaq === i"
+             class="bg-gray-100 rounded-b-lg p-6 -mt-2">
+          <p class="text-gray-700 leading-relaxed">{{ faq.answer }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contacto -->
+<section id="contacto" class="py-16">
+  <div class="max-w-screen-xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Contáctenos</h2>
+      <p class="text-lg text-gray-600">¿Tienes preguntas sobre nuestras becas? Estamos aquí para ayudarte</p>
+    </div>
+
+    <div class="max-w-2xl mx-auto">
+      <form (submit)="onContactSubmit($event)" class="space-y-6">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nombre y Apellido</label>
+            <input type="text" id="name" name="name" required
+                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-[#0066cc] focus:border-[#0066cc]">
+          </div>
+          <div>
+            <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Teléfono de contacto</label>
+            <input type="tel" id="phone" name="phone"
+                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-[#0066cc] focus:border-[#0066cc]">
+          </div>
+        </div>
+
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700 mb-2">E-Mail</label>
+          <input type="email" id="email" name="email" required
+                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-[#0066cc] focus:border-[#0066cc]">
+        </div>
+
+        <div>
+          <label for="help-type" class="block text-sm font-medium text-gray-700 mb-2">ME GUSTARÍA AYUDAR:</label>
+          <select id="help-type" name="help-type"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-flom-blue focus:border-flom-blue">
+            <option value="">Seleccione el tipo de ayuda</option>
+            <option value="informacion-becas">Información sobre becas</option>
+            <option value="proceso-postulacion">Proceso de postulación</option>
+            <option value="requisitos">Requisitos específicos</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Mensaje</label>
+          <textarea id="message" name="message" rows="5"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-[#0066cc] focus:border-[#0066cc]"></textarea>
+        </div>
+
+        <div class="text-center">
+          <button type="submit"
+                  class="bg-[#0066cc] hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
+            Enviar Mensaje
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
